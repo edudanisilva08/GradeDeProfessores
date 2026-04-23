@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <title>Cadastro - Grade</title>
+</head>
+<body>
+    <div class="auth-box">
+        <h2>Criar Conta</h2>
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="senha" placeholder="Senha (min 6 caracteres)">
+        <button id="btnCadastrar">Cadastrar</button>
+        <p><a href="login.html">Já tenho conta</a></p>
+    </div>
 
+    <script type="module">
+        import { auth } from './js/firebase-config.js';
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        document.getElementById('btnCadastrar').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            try {
+                await createUserWithEmailAndPassword(auth, email, senha);
+                alert("Conta criada!");
+                window.location.href = "index.html";
+            } catch (e) { alert("Erro: " + e.message); }
+        };
+    </script>
+</body>
+</html>
