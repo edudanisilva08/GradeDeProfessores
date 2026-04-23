@@ -1,16 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Grade de Professores</title>
+</head>
+<body>
+    <header>
+        <button id="btnPDF">Baixar em PDF</button>
+        <button id="btnSair">Sair</button>
+    </header>
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>High-Fidelity UI Design</title>
-      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
-    </head>
+    <div id="container-da-grade">
+        <table id="tabelaOriginal">
+            </table>
+    </div>
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script type="module">
+        import { auth } from './js/firebase-config.js';
+        import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { baixarPDF } from './js/pdf-export.js';
+
+        // 1. Proteção de Rota
+        onAuthStateChanged(auth, (user) => {
+            if (!user) window.location.href = "login.html";
+        });
+
+        // 2. Botão Sair
+        document.getElementById('btnSair').onclick = () => signOut(auth);
+
+        // 3. Botão PDF
+        document.getElementById('btnPDF').onclick = baixarPDF;
+    </script>
+</body>
+</html>
