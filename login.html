@@ -1,1 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <title>Login - Grade</title>
+</head>
+<body>
+    <div class="auth-box">
+        <h2>Acessar Grade</h2>
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="senha" placeholder="Senha">
+        <button id="btnLogin">Entrar</button>
+        <p><a href="cadastro.html">Criar nova conta</a></p>
+    </div>
 
+    <script type="module">
+        import { auth } from './js/firebase-config.js';
+        import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        document.getElementById('btnLogin').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const senha = document.getElementById('senha').value;
+            try {
+                await signInWithEmailAndPassword(auth, email, senha);
+                window.location.href = "index.html";
+            } catch (e) { alert("Erro no login"); }
+        };
+    </script>
+</body>
+</html>
